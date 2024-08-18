@@ -7,6 +7,10 @@ mod thing {
 
     #[automock]
     impl Thing {
+        pub fn new() -> Self {
+            Thing {}
+        }
+
         pub fn foo(&self) -> u32 {
             println!("In the real implementation.");
             return 0;
@@ -17,13 +21,13 @@ mod thing {
 #[double]
 use thing::Thing;
 
-#[allow(dead_code)]
 fn do_stuff(thing: &Thing) -> u32 {
     thing.foo()
 }
 
 fn main() {
-    println!("Run the tests!");
+    let obj = Thing::new();
+    do_stuff(&obj);
 }
 
 #[cfg(test)]
