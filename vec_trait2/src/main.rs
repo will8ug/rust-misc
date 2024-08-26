@@ -1,9 +1,10 @@
-use std::{sync::{Arc, Mutex}, thread};
+use std::{fmt::Debug, sync::{Arc, Mutex}, thread};
 
-trait Node {
+trait Node: Debug {
     fn show_msg(&self, msg: &str) -> bool;
 }
 
+#[derive(Debug)]
 struct LocalNode {
     id: i32,
 }
@@ -17,6 +18,7 @@ impl Node for LocalNode {
 
 type BoxNode = Box<dyn Node + Sync + Send>;
 
+#[derive(Debug)]
 struct ManyNodes {
     nodes: Vec<Arc<Mutex<BoxNode>>>,
 }
